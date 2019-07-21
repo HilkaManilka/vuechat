@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-toolbar app dark class="primary">
 
       <v-navigation-drawer
@@ -16,7 +16,7 @@
             </v-list-tile-avatar>
 
             <v-list-tile-content>
-              <v-list-tile-title>John Leider</v-list-tile-title>
+              <v-list-tile-title>{{ userTitle }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -47,28 +47,41 @@
         <v-icon>search</v-icon>
       </v-btn>
       <v-toolbar-items>
-        <v-btn @click="foo" flat>{{ btnText }}</v-btn>
+        <v-btn @click="showLoginForm" flat>{{ btnText }}</v-btn>
       </v-toolbar-items>
     </v-toolbar>
-  </v-app>
+
+    <login-form :dialog="dialog" @hideForm="hideModal"></login-form>
+  </div>
 </template>
 
 <script>
+    import LoginForm from '../LoginForm.vue';
+
     export default {
         name: "Header",
+        components: {
+            LoginForm
+        },
         data() {
             return {
                 btnText: 'Войти',
                 drawer: false,
+                dialog: false,
                 items: [
                     { title: 'Home', icon: 'dashboard' },
                     { title: 'About', icon: 'question_answer' }
-                ]
+                ],
+                userTitle: 'Кирилл Баранов'
             }
-            //items: []
         },
         methods: {
-
+            showLoginForm: function () {
+                this.dialog = true;
+            },
+            hideModal: function () {
+                this.dialog = false;
+            }
         }
     }
 </script>
